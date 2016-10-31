@@ -1,0 +1,59 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:TicketControl">
+    <Style x:Key="AddTextBox" TargetType="{x:Type TextBox}">
+        <Setter Property="HorizontalAlignment" Value="Left"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="Height" Value="20"/>
+        <Setter Property="Width" Value="150"/>
+    </Style>
+    <Style x:Key="AddTextBolck" TargetType="{x:Type TextBlock}">
+        <Setter Property="HorizontalAlignment" Value="Center"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="FontSize" Value="15"/>
+    </Style>
+
+    <Style x:Key="TemplateBlock" TargetType="{x:Type TextBlock}">
+        <Setter Property="HorizontalAlignment" Value="Center"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="FontSize" Value="12"/>
+    </Style>
+    <DataTemplate x:Key="TicketViewTemplate">
+        <Grid Height="90" Width="320">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="56*"/>
+                <ColumnDefinition Width="49*"/>
+                <ColumnDefinition Width="92*"/>
+                <ColumnDefinition Width="59*"/>
+                <ColumnDefinition Width="64*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+            <TextBlock x:Name="RookIdTextBlock" Text="{Binding shift}" Style="{StaticResource TemplateBlock}"/>
+            <TextBlock x:Name="TicketIdTextBlock" Grid.Row="1" Text="{Binding ticketID}" Style="{StaticResource TemplateBlock}"/>
+            <TextBlock x:Name="TimeTextBlock" Grid.Row="2" Text="时间" Style="{StaticResource TemplateBlock}"/>
+            <TextBlock x:Name="FirstTextBlock" Grid.Column="1" Text="始发地" Style="{StaticResource TemplateBlock}"/>
+            <TextBlock x:Name="FirstPlaceTextBlock" Grid.Column="1" Grid.Row="1" Text="{Binding startPlease}" Style="{StaticResource TemplateBlock}"/>
+            <TextBlock x:Name="FirstTimeTextBlock" Grid.Column="1" Grid.Row="2" Text="{Binding startTime}" Style="{StaticResource TemplateBlock}"/>
+            <TextBlock x:Name="LastTextBlock" Grid.Column="3" Text="终点站" Style="{StaticResource TemplateBlock}"/>
+            <TextBlock x:Name="LastPlaceTextBlock" Grid.Column="3" Grid.Row="1" Text="{Binding endPlease}" Style="{StaticResource TemplateBlock}"/>
+            <TextBlock x:Name="LastTiemTextBlock" Grid.Column="3" Grid.Row="2" Text="{Binding endTime}" Style="{StaticResource TemplateBlock}"/>
+            <TextBlock x:Name="StatusTextBlock" Grid.Column="4" Text="{Binding rookState}" Style="{StaticResource TemplateBlock}"/>
+            <TextBlock x:Name="MaxTextBlock" Grid.Column="4" Grid.Row="1" Text="{Binding maxPeople}" Style="{StaticResource TemplateBlock}"/>
+            <TextBlock x:Name="WaitTextBlock" Grid.Column="4" Grid.Row="2" Text="{Binding nightPeople}" Style="{StaticResource TemplateBlock}"/>
+            <Line Grid.Column="2" X1="10" Y1="0" X2="80" Y2="0" StrokeThickness="10" Height="5"
+                                  VerticalAlignment="Bottom" StrokeEndLineCap="Round"  Margin="0,0,0,-2.5" >
+                <Line.Stroke>
+                    <LinearGradientBrush EndPoint="0,0.5" StartPoint="1,0.5" >
+                        <GradientStop Color="Black"/>
+                        <GradientStop Offset="1"/>
+                    </LinearGradientBrush>
+                </Line.Stroke>
+            </Line>
+        </Grid>
+    </DataTemplate>
+
+</ResourceDictionary>
