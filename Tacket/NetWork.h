@@ -5,6 +5,10 @@
 #include<netinet/in.h>
 #include<arpa/inet.h>
 #include<string.h>
+#include"TestWork.h"
+
+//typedef char* string;
+
 void ServerListen()
 {
 	int server_sockfd;//服务端套接字
@@ -34,15 +38,25 @@ void ServerListen()
 	printf("accept slient %s\n", inet_ntoa(client_addr.sin_addr));
 	len = send(client_sockfd, "welcome to sercer\n",18,0);
 	/*接受客户端的数据, recv返回接到的字节数，send返回发送的字节数*/
+//	char returnResult = -1;
 	while((len = recv(client_sockfd, buf, BUFSIZ, 0))>0)
 	{
 		buf[len] = '\0';
 		printf("%s\n",buf);
+//		returnResult = buf[0];
 		if(send(client_sockfd, buf, len, 0) < 0)
 		{
 			perror("write");
-			return;
+			exit(0);
+			//return -1;
 		}
+		TiaoMu(buf[0]);
+
+//		else{
+//			close(client_sockfd);
+//			close(server_sockfd);
+//			return returnResult;
+//		}
 	}
 	close(client_sockfd);
 	close(server_sockfd);
@@ -50,12 +64,13 @@ void ServerListen()
 	return;
 }
 
-int ClientUse()
+void ClientUse()
 {
 	int client_sockfd;
 	int len;
 	struct sockaddr_in server_addr;//服务器网络地址结构
 	char buf[BUFSIZ];
+//	string buf;
 	memset(&server_addr, 0, sizeof(server_addr));//初始化数据
 	server_addr.sin_family = AF_INET;//设置ip通信
 	server_addr.sin_addr.s_addr = inet_addr("127.0.0.1");//服务器ip
@@ -68,7 +83,7 @@ int ClientUse()
 	len = recv(client_sockfd, buf, BUFSIZ, 0);
 	buf[len] = '\0';
 	printf("%s\n", buf);//打印服务端消息
-
+//	int i = 0;
 	/*循环大宋接受消息并打印*/
 	while(1)
 	{
@@ -83,5 +98,31 @@ int ClientUse()
 		printf("received : %s\n", buf);
 	}
 	close(client_sockfd);
-	return 0;
+	return ;
+}
+
+void OnlySend(char *json)
+{	
+	int client_sockfd;
+	int len;
+	struct sockaddr_in server_addr;//服务器网络地址结构
+	char buf[BUFSIZ];
+//	string buf;
+	memset(&server_addr, 0, sizeof(server_addr));//初始化数据
+	server_addr.sin_family = AF_INET;//设置ip通信
+	server_addr.sin_addr.s_addr = inet_addr("127.0.0.1");//服务器ip
+	server_addr.sin_port = htons(6666);
+	/*客户端创建套接字， ipv4面向连接通信，tcp协议*/
+	client_sockfd = socket(PF_INET, SOCK_STREAM, 0);
+	/*套接字绑定到客户端上网络地址上*/
+	connect(client_sockfd, (struct sockaddr*)&server_addr, sizeof(struct sockaddr));
+	//char *json = /*----------*/;
+	len = send(client_sockfd, json, strlen(json), 0);
+	close(client_sockfd);
+	return;
+}
+
+void OnlyRecv()
+{
+
 }
