@@ -2,46 +2,42 @@
 #include<stdlib.h>
 #include"Collicton.h"
 #include"cJSON/cJSON.c"
+
+typedef cJSON * cJson;
+
 Tickets *JsonToTickets(string json)
 {
-	cJSON *root = cJSON_Parse(json);
 
-//	int iSize = cJSON_Parse(root), i;
-	cJSON *cShift = cJSON_GetObjectItem(root, "shift");
-	Tickets *cTickets = newTickets();
-	Ticket *cTicket = (Ticket*)malloc(sizeof(Ticket));
-	cTicket -> shift = cShift->valuestring;
-	cTicket -> next = NULL;
-	cTicket -> previous = NULL;
-	Add(cTickets, cTicket);
 }
 
-string TicketsToJson(Tickets *tickets)
+string TicketsToJson(Tickets *tickets, int len)
 {
-	cJSON *root = cJSON_CreateObject();
-	printf("1\n");
-	Ticket *work = tickets->head->next;
-	printf("2\n");
-	string p;
+//	printf("%d", len);
+	cJson root, itemRoot[len];
+	root = cJSON_CreateObject();
+	Ticket *work = tickets -> head -> next;
+	char *p;
+	int i = 0;
 	while(work != NULL)
 	{
-		cJSON *rootItem = cJSON_CreateObject();
-		printf("3\n");
-		cJSON_AddStringToObject(rootItem, "shift", work-> shift);
-		cJSON_AddItemToObject(root, "rootItem", rootItem);
-		printf("4\n");
+//		printf("%d\n", i);
+		itemRoot[i] = cJSON_CreateObject();
+		cJSON_AddStringToObject(itemRoot[i], "shift", work -> shift);
+		cJSON_AddItemToArray(root, itemRoot[i]);
 		work = work -> next;
-		cJSON_Delete(rootItem);
+		i++;
 	}
-	printf("5\n");
 	p = cJSON_Print(root);
-	printf("6\n");
-	if(p == NULL)
-	{
-		printf("8\n");
-		cJSON_Delete(root);
-		return NULL;
-	}
-	else return p;
+	cJSON_Delete(root);
+	return p;
 }
 
+string TicketToJson(Ticket *ticket)
+{
+	cJSON *root = cJSON_CreateObject();
+	char *p;
+	cJSON_AddStringToObject(root, "shift", ticket -> shift);
+	p = cJSON_Print(root);
+	cJSON_Delete(root);
+	return p;
+}
