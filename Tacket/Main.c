@@ -23,13 +23,17 @@ int main()
 	WritLine(tickets);
 
 //	printf("%s\n", Remove(tickets, first)->shift);
-	printf("%s\n", RemoveAt(tickets, 0)->shift);
+//	printf("%s\n", RemoveAt(tickets, 0)->shift);
 
 	StreamWrite("1.txt", "hello, world");
 	printf("%s\n",StreamRead("1.txt"));
-
+	string s = TicketsToJson(tickets, GetLength(tickets));
+//	printf("%s\n", TicketsToJson(tickets, GetLength(tickets)));
+	printf("%s\n", s);
 	printf("hello\n");
-
+	
+//	printf("%s\n", JsonToTickets(s) -> shift);
+	WritLine(JsonToTickets(s));
 	return 0;
 }
 

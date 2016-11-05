@@ -5,9 +5,43 @@
 
 typedef cJSON * cJson;
 
+void TicketAddValue(Ticket *ticket, cJson cjson)
+{
+	ticket -> shift = cJSON_GetObjectItem(cjson, "shift") -> valuestring;
+	//more
+}
+
+void AddTicketValue(cJson cjson, Ticket *ticket)
+{
+	cJSON_AddStringToObject(cjson, "shift", ticket -> shift);
+	//more
+}
+
 Tickets *JsonToTickets(string json)
 {
-
+	cJson root, arrayItem, item;
+	int i = 0, size = 0;
+	root = cJSON_Parse(json);
+	size = cJSON_GetArraySize(root);
+	Tickets *tickets = newTickets();
+//	cJSON_Delete(root);
+	string p = NULL;
+	while(1)
+	{
+		Ticket *ticket = (Ticket*)malloc(sizeof(Ticket));
+		arrayItem = cJSON_GetArrayItem(root, i);
+		if(arrayItem)
+		{
+			p = cJSON_Print(arrayItem);
+			item = cJSON_Parse(p);
+//			ticket -> shift = cJSON_GetObjectItem(item, "shift") -> valuestring;
+			TicketAddValue(ticket, item);
+			Add(tickets, ticket);
+			i++;
+		}
+		else break;
+	}
+	return tickets;
 }
 
 string TicketsToJson(Tickets *tickets, int len)
@@ -22,7 +56,8 @@ string TicketsToJson(Tickets *tickets, int len)
 	{
 //		printf("%d\n", i);
 		itemRoot[i] = cJSON_CreateObject();
-		cJSON_AddStringToObject(itemRoot[i], "shift", work -> shift);
+//		cJSON_AddStringToObject(itemRoot[i], "shift", work -> shift);
+		AddTicketValue(itemRoot[i], work);
 		cJSON_AddItemToArray(root, itemRoot[i]);
 		work = work -> next;
 		i++;
@@ -32,12 +67,3 @@ string TicketsToJson(Tickets *tickets, int len)
 	return p;
 }
 
-string TicketToJson(Ticket *ticket)
-{
-	cJSON *root = cJSON_CreateObject();
-	char *p;
-	cJSON_AddStringToObject(root, "shift", ticket -> shift);
-	p = cJSON_Print(root);
-	cJSON_Delete(root);
-	return p;
-}
