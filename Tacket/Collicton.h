@@ -71,6 +71,13 @@ void AddAt(Tickets *tickets, Ticket *ticket, int index)
 
 }
 
+void AddAll(Tickets *tickets, Tickets *ts)
+{
+	tickets -> last -> next = ts -> head;
+	ts -> head -> previous = tickets -> last;
+	tickets -> last = ts -> last;
+}
+
 int GetLength(Tickets *tickets)
 {
 	int length = 0;
@@ -115,7 +122,10 @@ Ticket *RemoveAt(Tickets *tickets, int index)
 		exit(0);
 	}
 	else if(index == GetLength(tickets))
+	{
 		printf("change function. eg:Reomve.\n");
+		return NULL;
+	}
 	else
 	{
 		Ticket *work = tickets -> head ->next, *p;
@@ -131,4 +141,28 @@ Ticket *RemoveAt(Tickets *tickets, int index)
 		p -> previous = NULL;
 		return p;
 	}
+}
+
+int Equal(Ticket *t1, Ticket *t2)
+{
+	int n = 0;
+	switch(n)
+	{
+		case 0:
+			if(strcmp(t1 -> shift, t2 -> shift) != 0)
+				break;
+			else{}
+//		case 1:
+//			if(strcmp(t1 -> ticketID, t2 -> ticketID) != 0)
+//				break;
+//			else{}
+		default:
+			return 1;
+	}
+	return 0;
+}
+
+Ticket *Find(Tickets *tickets, Ticket *ticket)
+{
+
 }

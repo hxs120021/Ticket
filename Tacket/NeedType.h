@@ -5,10 +5,10 @@ typedef char * string;
 
 typedef enum
 {
-	    RookStart,//出发
-		NotStart,//没出发
-	    Delay ,//延班
-	    Trouble//故障
+	    RookStart = 1,//出发
+		NotStart = 2,//没出发
+	    Delay = 3,//延班
+	    Trouble = 4//故障
 }RookState;
 typedef struct T
 {
