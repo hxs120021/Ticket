@@ -5,7 +5,7 @@
 #include<netinet/in.h>
 #include<arpa/inet.h>
 #include<string.h>
-#include"TestWork.h"
+//#include"TestWork.h"
 
 //typedef char* string;
 
@@ -124,5 +124,45 @@ void OnlySend(char *json)
 
 void OnlyRecv()
 {
+
+}
+
+void TiaoMu(string workString, NeedTickets *need)
+{
+	char Mu = workString[0];
+	char jsonValue[1024];
+	int i;
+	for(i = 0; i < 1023; i++)
+	{
+		jsonValue[i] = workString[i+1];
+		if(workString[i +1] == '\0')
+			break;
+	}
+	switch(Mu)
+	{
+		case '1':
+			//添加my
+			Work_Add(need -> myTickets, jsonValue, "myTickets.txt");
+			break;
+		case '2':
+			//添加all
+			Work_Add(need -> allTickets, jsonValue, "allTickets.txt");
+			break;
+		case '3':
+			//删除my
+			Work_Remove(need -> myTickets, (int), "myTickets.txt");
+			break;
+		case '4':
+			//删除all
+			Work_Remove(need -> allTickets, (int), "allTickets.txt");
+			break;
+		case '5':
+			//find
+			string str = Work_Find(need -> myTickets, jsonValue);
+			OnlySend(str);
+			break;
+		default:
+			//...
+	}
 
 }
