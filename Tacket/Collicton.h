@@ -148,8 +148,8 @@ Ticket *RemoveAt(Tickets *tickets, int index)
 
 int Equal(Ticket *t1, Ticket *t2)
 {
-	int n = 0;
-	switch(n)
+//	int n = 0;
+	switch(0)
 	{
 		case 0:
 			if(strcmp(t1 -> shift, t2 -> shift) != 0)
@@ -203,5 +203,6 @@ Tickets *Find(Tickets *tickets, string end)
 			Add(ts, work);
 		work = work -> next;
 	}
+
 	return ts;
 }

@@ -15,7 +15,11 @@ void Wrok_Remove(Tickets *tickets, int index, const string path)
 	streamWrite(path, TicketsToJson(ticktes));
 }
 
-string Work_Find(Ticket *tickets, string end)
+string Work_Find(Tickets *tickets, string end)
 {
-	 return TicketsToJson(Find(tickets, end));
+	Tickets *ts = Find(tickets, end);
+	if (ts -> head -> next == NULL)
+		return "NULL";
+	else
+		return TicketsToJson(ts);
 }
