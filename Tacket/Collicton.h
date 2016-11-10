@@ -22,18 +22,20 @@ Tickets *newTickets()
 	return tickets;
 }
 
+NeedTickets *newNeedTicekts()
+{
+	NeedTickets *needTickets = (NeedTickets*)malloc(sizeof(NeedTickets));
+	needTickets -> myTickets = newTickets();
+	needTicekts -> allTickets = newTickets();
+	return needTickets;
+}
+
 void Add(Tickets *tickets, Ticket *ticket)
 {
 	
 	ticket->previous = tickets->last;
 	tickets->last->next = ticket;
 	tickets->last = ticket;
-	
-	/*
-	&(ticket -> previous) = &(tickets->last);
-	&(tickets -> last -> next) = &(ticket);
-	&(tickets -> last) = &ticket;
-	*/
 }
 
 void WritLine(Tickets *tickets)
@@ -55,7 +57,8 @@ void AddAt(Tickets *tickets, Ticket *ticket, int index)
 		return;
 	}
 	else if(index == GetLength(tickets))
-		printf("change function. eg:AddAt\n");
+//		printf("change function. eg:AddAt\n");
+		Add(tickets, ticket);
 	else
 	{
 		Ticket *work = tickets -> head -> next;
@@ -63,10 +66,10 @@ void AddAt(Tickets *tickets, Ticket *ticket, int index)
 		for(i = 0; i < index; i++)
 			work = work -> next;
 		Ticket *workp = work -> previous;
-		ticket -> previous = workp;
+		ticket -> previous = work;
 		ticket -> next = work;
 		work -> previous = ticket;
-		workp -> next = ticket;
+		work -> next = ticket;
 	}
 
 }
@@ -152,17 +155,53 @@ int Equal(Ticket *t1, Ticket *t2)
 			if(strcmp(t1 -> shift, t2 -> shift) != 0)
 				break;
 			else{}
-//		case 1:
-//			if(strcmp(t1 -> ticketID, t2 -> ticketID) != 0)
-//				break;
-//			else{}
+		case 1:
+			if(strcmp(t1 -> ticketID, t2 -> ticketID) != 0)
+				break;
+			else{}
+		case 2:
+			if(strcmp(t1 -> startTime, t2 -> startTime) != 0)
+				break;
+			else {}
+		case 3:
+			if(strcmp(t1 -> startPlease, t2 -> startPlease) != 0)
+				break;
+			else{}
+		case 4:
+			if(strcmp(t1 -> endTime, t2 -> endTime) != 0)
+				break;
+			else{}
+		case 5:
+			if(strcmp(t1 -> endPlease, t2 -> endPlease) != 0)
+				break;
+			else{}
+		case 6:
+			if(t1 -> maxPeople == t2 -> maxPeople)
+				break;
+			else{}
+		case 7:
+			if(t1 -> earlyPeople == t2 -> earlyPeople)
+				break;
+			else{}
+		case 8:
+			if(t1 -> nighitPeople == t2 -> nightPeople)
+				break;
+			else{}
 		default:
 			return 1;
 	}
 	return 0;
 }
 
-Ticket *Find(Tickets *tickets, Ticket *ticket)
+Tickets *Find(Tickets *tickets, string end)
 {
-
+	Tickets *ts = newTickets();
+	Ticket *work = tickets -> head -> next;
+	while(work =! NULL)
+	{
+		if(strcmp(work -> endPlease, end) == 0)
+			Add(ts, work);
+		work = work -> next;
+	}
+	return ts;
 }
