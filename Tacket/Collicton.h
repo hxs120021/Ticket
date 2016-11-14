@@ -12,16 +12,23 @@ void AddAt(Tickets *tickets, Ticket *ticket, int index);
 int GetLength(Tickets *tickets);
 Tickets *newTickets();
 
+Ticket *newTicket()
+{
+	Ticket *ticket = (Ticket*)malloc(sizeof(Ticket));
+	ticket -> next = NULL;
+	ticket -> previous = NULL;
+	return ticket;
+}
+
 Tickets *newTickets()
 {
 	Tickets *tickets = (Tickets*)malloc(sizeof(Tickets));
-	tickets->head = (Ticket*)malloc(sizeof(Ticket));
+	tickets->head = newTicket();
 	tickets->last = tickets->head;
-	tickets->head->next = NULL;
-    tickets->head->previous= NULL;
+	
 	return tickets;
 }
-
+/*
 NeedTickets *newNeedTicekts()
 {
 	NeedTickets *needTickets = (NeedTickets*)malloc(sizeof(NeedTickets));
@@ -29,7 +36,7 @@ NeedTickets *newNeedTicekts()
 	needTicekts -> allTickets = newTickets();
 	return needTickets;
 }
-
+*/
 void Add(Tickets *tickets, Ticket *ticket)
 {
 	
@@ -66,10 +73,10 @@ void AddAt(Tickets *tickets, Ticket *ticket, int index)
 		for(i = 0; i < index; i++)
 			work = work -> next;
 		Ticket *workp = work -> previous;
-		ticket -> previous = work;
+		ticket -> previous = workp;
 		ticket -> next = work;
 		work -> previous = ticket;
-		work -> next = ticket;
+		workp -> next = ticket;
 	}
 
 }
@@ -184,7 +191,7 @@ int Equal(Ticket *t1, Ticket *t2)
 				break;
 			else{}
 		case 8:
-			if(t1 -> nighitPeople == t2 -> nightPeople)
+			if(t1 -> nightPeople == t2 -> nightPeople)
 				break;
 			else{}
 		default:
@@ -193,11 +200,11 @@ int Equal(Ticket *t1, Ticket *t2)
 	return 0;
 }
 
-Tickets *Find(Tickets *tickets, string end)
+Tickets *FindEnd(Tickets *tickets, string end)
 {
 	Tickets *ts = newTickets();
 	Ticket *work = tickets -> head -> next;
-	while(work =! NULL)
+	while(work != NULL)
 	{
 		if(strcmp(work -> endPlease, end) == 0)
 			Add(ts, work);
@@ -206,3 +213,30 @@ Tickets *Find(Tickets *tickets, string end)
 
 	return ts;
 }
+
+void ShowTicket(Ticket *ticket)
+{
+	printf("shift:%s\n", ticket -> shift);
+	printf("ticketID:%s\n",ticket -> ticketID );
+	printf("startTime:%s\n", ticket -> startTime);
+	printf("startPlease:%s\n", ticket -> startPlease);
+	printf("endTime:%s\n", ticket -> endTime);
+	printf("endPlease:%s\n", ticket -> endPlease);
+	printf("maxPeople:%d\n", ticket -> maxPeople);
+	printf("earlyPeople:%d\n", ticket -> earlyPeople);
+	printf("nightPeople:%d\n", ticket ->nightPeople);
+	printf("rookState:%s\n", ConvertToRookState(ticket -> rookState));
+	return;
+}
+
+void ShowTickets(Tickets *tickets)
+{
+	Ticket *work = tickets -> head -> next;
+	while(work != NULL)
+	{
+		ShowTicket(work);
+		work = work -> next;
+	}
+	return;
+}
+
