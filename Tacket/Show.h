@@ -12,10 +12,10 @@ void ShowMainMenu(Tickets *all ,Tickets *myH, Tickets *myT);
 void ShowAdminiMenu(Tickets *all);
 void ShowUserMenu(Tickets *all, Tickets *myH, Tickets *myT);
 void ShowFindMenu(Tickets *tickets);
-void Show_Tickets(Tickets *tickets, int _BOOL);
+void Show_Tickets(Tickets *tickets, int isRefund);
 void Show_FindTickets_End(Tickets *tickets);
 void Show_FindTickets_Shift(Tickets *tickets);
-void show_AddTickets(Tickets *tickets);
+void Show_AddTickets(Tickets *tickets);
 
 
 char *Passwd()
@@ -24,7 +24,7 @@ char *Passwd()
 	int i;
 	for(i = 0; ; i++)
 	{
-		p[i] = getch();
+		p[i] = getchar();
 		if(p[i] == '\r')
 			break;
 		printf("*");
@@ -65,12 +65,14 @@ void ShowStartMenu(Tickets *all, Tickets *myH, Tickets *myT)
 
 void ShowMainMenu(Tickets *all, Tickets *myH, Tickets *myT)
 {	
-	char *user, *passwd;
+	char user[10], passwd[20];
 	printf("deng lu:\n");
 	printf("log on :");
-	scanf("%s", user);
+//	scanf("%s", user);
+	gets(user);
 	printf("passwd :");
-	passwd = Passwd();
+//	passwd = Passwd();
+	gets(passwd);
 	if(strcmp(user, "admin") == 0 && strcmp(passwd, "123") == 0)
 		ShowAdminiMenu(all);
 	else if(strcmp(user, "user") == 0 && strcmp(passwd, "456") == 0)
@@ -147,7 +149,7 @@ void ShowFindMenu(Tickets *tickets)
 			Show_FindTickets_End(tickets);
 			break;
 		case 2:
-			Show_findTickets_Shift(tickets);
+			Show_FindTickets_Shift(tickets);
 			break;
 	}
 }
@@ -162,7 +164,7 @@ void Show_Tickets(Tickets *tickets, int isRefund)
 		printf("select eradicate a tickets\n");
 		scanf("%d", &index);
 		RemoveAt(tickets, index);
-		Show_Ticekts(tickets);
+		ShowTickets(tickets);
 	}
 }
 
@@ -185,7 +187,7 @@ void Show_FindTickets_Shift(Tickets *tickets)
 
  void Show_AddTickets(Tickets *tickets)
 {
-	Ticket *ticket = newTicekt();
+	Ticket *ticket = newTicket();
 	printf("enter shift:");
 	scanf("%s", ticket->shift);
 	printf("enter ticketID:");

@@ -4,9 +4,10 @@
 
 int main()
 {
-	Tickets *allTickets = newTicekts();
+	Tickets *allTickets = newTickets();
 	Tickets *myHistory = newTickets();
-	Tickets *myTickets = newTicekts();
-	ShowStartMenu(allTickets, myHistory, myTickets );
+	Tickets *myTickets = newTickets();
+//	ShowStartMenu(allTickets, myHistory, myTickets );
+	ShowMainMenu(allTickets, myHistory, myTickets);
 	return 0;
 }
