@@ -10,14 +10,15 @@ void TicketAddValue(Ticket *ticket, cJson cjson)
 	ticket -> shift = cJSON_GetObjectItem(cjson, "shift") -> valuestring;
 	//more
 	ticket -> ticketID = cJSON_GetObjectItem(cjson, "ticketID") -> valuestring;
-	ticekt -> startTime = cJSON_GetObjectItem(cjson, "startTime") -> valuestring;
+	ticket -> startTime = cJSON_GetObjectItem(cjson, "startTime") -> valuestring;
 	ticket -> startPlease = cJSON_GetObjectItem(cjson, "startPlease") -> valuestring;
-	ticekt -> endTime = cJSON_GetObjectItem(cjson, "endTime") -> valuestring;
-	ticket -> endPlease = cJSON_GetObjectItem(cjson, "endPlease") -> valuestrig;
+	ticket -> endTime = cJSON_GetObjectItem(cjson, "endTime") -> valuestring;
+	ticket -> endPlease = cJSON_GetObjectItem(cjson, "endPlease") -> valuestring;
 	ticket -> maxPeople = cJSON_GetObjectItem(cjson, "maxPeople") -> valueint;
 	ticket -> earlyPeople = cJSON_GetObjectItem(cjson, "earlyPeople") -> valueint;
 	ticket -> nightPeople = cJSON_GetObjectItem(cjson, "nightPeople") -> valueint;
 	ticket -> rookState = cJSON_GetObjectItem(cjson, "rookState") -> valueint;
+	//ticket -> rookState = cJSON_GetObjectItem(cjson, "") ->valuestrig
 }
 
 void AddTicketValue(cJson cjson, Ticket *ticket)
@@ -26,13 +27,13 @@ void AddTicketValue(cJson cjson, Ticket *ticket)
 	//more
 	cJSON_AddStringToObject(cjson, "ticketID", ticket -> ticketID);
 	cJSON_AddStringToObject(cjson, "startTime", ticket -> startTime);
-	cJSON_AddStringToObject(cjson, "startPlease", ticekt -> startPlease);
+	cJSON_AddStringToObject(cjson, "startPlease", ticket -> startPlease);
 	cJSON_AddStringToObject(cjson, "endTime", ticket -> endTime);
 	cJSON_AddStringToObject(cjson, "endPlease", ticket -> endPlease);
 	cJSON_AddNumberToObject(cjson, "maxPeople", ticket -> maxPeople);
 	cJSON_AddNumberToObject(cjson, "earlyPeople", ticket -> earlyPeople);
 	cJSON_AddNumberToObject(cjson, "nightPeople", ticket -> nightPeople);
-	cJSON_AddNumberToObject(cjson, "rookState", ticket -> rootState);
+	cJSON_AddNumberToObject(cjson, "rookState", ticket -> rookState);
 }
 
 Tickets *JsonToTickets(string json)

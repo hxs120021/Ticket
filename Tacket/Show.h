@@ -1,7 +1,9 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <unistd.h>
-#include "Collicton.h"
+//#include "JSON.h"
+#include "FileIO.h"
+//#include "Collicton.h"
 #define BOOL_BACKTICKET 0
 #define BOOL_DONTBACKTICKET 1
 #define ADDTICKET 2
@@ -65,6 +67,7 @@ void ShowStartMenu(Tickets *all, Tickets *myH, Tickets *myT)
 
 void ShowMainMenu(Tickets *all, Tickets *myH, Tickets *myT)
 {	
+
 	char user[10], passwd[20];
 	printf("deng lu:\n");
 	printf("log on :");
@@ -79,6 +82,9 @@ void ShowMainMenu(Tickets *all, Tickets *myH, Tickets *myT)
 		ShowUserMenu(all, myH, myT);
 	else
 		printf("log in is false\n");
+	StreamWrite("allTickets.txt", TicketsToJson(all));
+	StreamWrite("myTickets.txt", TicketsToJson(myT));
+	StreamWrite("myHistory.txt", TicketsToJson(myH));
 	return;
 }
 
@@ -187,21 +193,38 @@ void Show_FindTickets_Shift(Tickets *tickets)
 
  void Show_AddTickets(Tickets *tickets)
 {
+	char sh[12], ti[12], sT[20], sP[12], eT[12], eP[12];
+	int max;
 	Ticket *ticket = newTicket();
 	printf("enter shift:");
-	scanf("%s", ticket->shift);
+	scanf("%s", sh);
+//	gets(sh);
 	printf("enter ticketID:");
-	scanf("%s", ticket->ticketID);
+	scanf("%s", ti );
+//	gets(ti);
 	printf("enter startTime:");
-	scanf("%s", ticket -> startTime);
+	scanf("%s", sT);
+//	gets(sT);
 	printf("enter startPlease:");
-	scanf("%s", ticket -> startPlease);
+	scanf("%s", sP);
+//	gets(sP);
 	printf("enter endTime:");
-	scanf("%s", ticket -> endTime);
+	scanf("%s", eT);
+//	gets(eT);
 	printf("enter endPlease:");
-	scanf("%s", ticket -> endPlease);
+	scanf("%s", eP);
+//	gets(eP);
 	printf("enter maxPeople:");
-	scanf("%d", &ticket -> maxPeople);
+	scanf("%d", &max);
+	ticket -> shift = sh;
+	ticket -> ticketID = ti;
+	ticket -> startTime = sT;
+	ticket -> startPlease = sP;
+	ticket -> endTime = eT;
+	ticket -> endPlease = eP;
+	ticket -> maxPeople = max;
+	ticket -> earlyPeople = 999;
+	ticket -> nightPeople = 999;
 	Add(tickets, ticket);
 	return;
 }

@@ -10,7 +10,7 @@ string StreamRead(const string filePath)
 	if(fp == NULL)
 	{
 		printf("file open is failed\n");
-		exit(0);
+		return NULL;
 	}
 	fgets(jsonString,1024,fp);
 	
