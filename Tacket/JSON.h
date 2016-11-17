@@ -7,6 +7,7 @@ typedef cJSON * cJson;
 
 void TicketAddValue(Ticket *ticket, cJson cjson)
 {
+	printf("TicketAddValue-----%s\n", cJSON_GetObjectItem(cjson, "shift") -> valuestring);
 	ticket -> shift = cJSON_GetObjectItem(cjson, "shift") -> valuestring;
 	//more
 	ticket -> ticketID = cJSON_GetObjectItem(cjson, "ticketID") -> valuestring;
@@ -38,10 +39,11 @@ void AddTicketValue(cJson cjson, Ticket *ticket)
 
 Tickets *JsonToTickets(string json)
 {
+	printf("%s\n", json);
 	cJson root, arrayItem, item;
-	int i = 0, size = 0;
+	int i = 0;// size = 0;
 	root = cJSON_Parse(json);
-	size = cJSON_GetArraySize(root);
+//	size = cJSON_GetArraySize(root);
 	Tickets *tickets = newTickets();
 //	cJSON_Delete(root);
 	string p = NULL;

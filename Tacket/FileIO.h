@@ -3,10 +3,12 @@
 #include<stdlib.h>
 string StreamRead(const string filePath)
 {
+//	printf("%s\n", filePath);
+
 	char json[1024];
 	string jsonString = json;
 	FILE *fp;
-	fp = fopen(filePath, "r");
+	fp = fopen(filePath, "rb");
 	if(fp == NULL)
 	{
 		printf("file open is failed\n");
@@ -20,17 +22,30 @@ string StreamRead(const string filePath)
 
 void StreamWrite(const string filePath, string jsonString)
 {
+	printf("%s\n", jsonString);
 	FILE *fp;
-	fp = fopen(filePath, "w");
+	fp = fopen(filePath, "wb");
 	if (fp == NULL)
 	{
 		printf("file open is failed\n");
-		exit(0);
+		return;
 	}
 	
 	fputs(jsonString, fp);
-	 fclose(fp);
+	fclose(fp);
 	return;
 }
 
-
+string StreamReadB(const string filePath)
+{
+	FILE *fp;
+	fp = fopen(filePath, "rb");
+	fseek(fp, 0, SEEK_END);
+	int file_size;
+	file_size = ftell(fp);
+	string tmp;
+	fseek(fp, 0, SEEK_SET);
+	tmp = (string)malloc(sizeof(char) * file_size);
+	fread(tmp, file_size, sizeof(char), fp);
+	return tmp;
+}

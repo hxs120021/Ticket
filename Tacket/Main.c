@@ -4,12 +4,14 @@
 
 int main()
 {
-	Tickets *allTickets = newTickets();
-	Tickets *myHistory = newTickets();
-	Tickets *myTickets = newTickets();
-	allTickets = JsonToTickets(StreamRead("allTickets.txt"));
-	myHistory = JsonToTickets(StreamRead("myHistory.txt"));
-	myTickets = JsonToTickets(StreamRead("myTickets.txt"));
+//	Tickets *allTickets = newTickets();
+//	Tickets *myHistory = newTickets();
+//	Tickets *myTickets = newTickets();
+	//printf("wwwhello\n");
+	Tickets	*allTickets = JsonToTickets(StreamReadB("allTickets.txt"));
+//	printf("wwwhello\n");
+	Tickets *myHistory = JsonToTickets(StreamReadB("myHistory.txt"));
+	Tickets *myTickets = JsonToTickets(StreamReadB("myTickets.txt"));
 //	ShowStartMenu(allTickets, myHistory, myTickets );
 	ShowMainMenu(allTickets, myHistory, myTickets);
 	return 0;

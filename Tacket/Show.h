@@ -71,11 +71,12 @@ void ShowMainMenu(Tickets *all, Tickets *myH, Tickets *myT)
 	char user[10], passwd[20];
 	printf("deng lu:\n");
 	printf("log on :");
-//	scanf("%s", user);
-	gets(user);
+	scanf("%s", user);
+//	gets(user);
 	printf("passwd :");
 //	passwd = Passwd();
-	gets(passwd);
+//	gets(passwd);
+	scanf("%s", passwd);
 	if(strcmp(user, "admin") == 0 && strcmp(passwd, "123") == 0)
 		ShowAdminiMenu(all);
 	else if(strcmp(user, "user") == 0 && strcmp(passwd, "456") == 0)
@@ -125,7 +126,7 @@ void ShowUserMenu(Tickets *all, Tickets *myH, Tickets *myT)
 	{
 		case 1:
 		{
-			char *isRefund = NULL;
+			char isRefund[10];
 			printf("tui piao me?(yes/no)");
 			scanf("%s", isRefund);
 			if(strcmp(isRefund, "yes") == 0)
@@ -225,6 +226,8 @@ void Show_FindTickets_Shift(Tickets *tickets)
 	ticket -> maxPeople = max;
 	ticket -> earlyPeople = 999;
 	ticket -> nightPeople = 999;
+	ticket -> rookState = 1;
+	printf("hello----%s",ticket -> shift);
 	Add(tickets, ticket);
 	return;
 }

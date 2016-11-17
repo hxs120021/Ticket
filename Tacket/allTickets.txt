@@ -1,0 +1,62 @@
+{
+	"":	{
+		"shift":	"1",
+		"ticketID":	"3",
+		"startTime":	"2",
+		"startPlease":	"2",
+		"endTime":	"6",
+		"endPlease":	"6",
+		"maxPeople":	123,
+		"earlyPeople":	999,
+		"nightPeople":	999,
+		"rookState":	1
+	},
+	"":	{
+		"shift":	"€\u0003œÙÿ",
+		"ticketID":	"`x—",
+		"startTime":	"\u0001",
+		"startPlease":	"€\u0003œÙÿ",
+		"endTime":	"8",
+		"endPlease":	"\u0001",
+		"maxPeople":	777,
+		"earlyPeople":	999,
+		"nightPeople":	999,
+		"rookState":	0
+	},
+	"":	{
+		"shift":	"€*ïÚÿ",
+		"ticketID":	" å¨",
+		"startTime":	"\u0002",
+		"startPlease":	"€ð¨",
+		"endTime":	"4",
+		"endPlease":	"\u0002",
+		"maxPeople":	4,
+		"earlyPeople":	999,
+		"nightPeople":	999,
+		"rookState":	0
+	},
+	"":	{
+		"shift":	"ÀÂÅ",
+		"ticketID":	" ÍÅ",
+		"startTime":	"\u0003",
+		"startPlease":	"PYVÓÿ",
+		"endTime":	"r",
+		"endPlease":	"\u0003",
+		"maxPeople":	222,
+		"earlyPeople":	999,
+		"nightPeople":	999,
+		"rookState":	0
+	},
+	"":	{
+		"shift":	"àß¸",
+		"ticketID":	"Àê¸",
+		"startTime":	"\u0004",
+		"startPlease":	" õ¸",
+		"endTime":	"4",
+		"endPlease":	"\u0004",
+		"maxPeople":	2,
+		"earlyPeople":	999,
+		"nightPeople":	999,
+		"rookState":	0
+	}
+}

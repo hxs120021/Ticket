@@ -237,6 +237,9 @@ void ShowTickets(Tickets *tickets)
 		ShowTicket(work);
 		work = work -> next;
 	}
+	if (work == NULL)
+		printf("NULL KNOW\n");
+	printf("showtickets------%s", work -> shift);
 	return;
 }
 
