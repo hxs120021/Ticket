@@ -78,14 +78,19 @@ void ShowMainMenu(Tickets *all, Tickets *myH, Tickets *myT)
 //	gets(passwd);
 	scanf("%s", passwd);
 	if(strcmp(user, "admin") == 0 && strcmp(passwd, "123") == 0)
+	{
 		ShowAdminiMenu(all);
+		printf("\nint int %d int int \n", GetLength(all));
+		printf("\nShowAdminiMenu is over***%s***\n", all -> head -> next -> shift);
+	}
 	else if(strcmp(user, "user") == 0 && strcmp(passwd, "456") == 0)
 		ShowUserMenu(all, myH, myT);
 	else
 		printf("log in is false\n");
-	StreamWrite("allTickets.txt", TicketsToJson(all));
-	StreamWrite("myTickets.txt", TicketsToJson(myT));
-	StreamWrite("myHistory.txt", TicketsToJson(myH));
+	printf("%s", all->head->next->shift);
+	StreamWriteC("allTickets.txt", all);
+	StreamWriteC("myTickets.txt", myT);
+	StreamWriteC("myHistory.txt", myH);
 	return;
 }
 
@@ -100,9 +105,11 @@ void ShowAdminiMenu(Tickets *all)
 	switch(index)
 	{
 		case 1:
-			//Show_Tickets();
-			Show_AddTickets(all);
-			break;
+			{//Show_Tickets();
+				Show_AddTickets(all);
+				printf(" --%s-- ",all -> head -> next -> shift);
+				break;
+			}
 		case 2:
 			Show_Tickets(all, BOOL_DONTBACKTICKET);
 			break;
@@ -110,6 +117,7 @@ void ShowAdminiMenu(Tickets *all)
 			Show_Tickets(all, BOOL_BACKTICKET);
 			break;
 	}
+	printf("switch is over ^^^%s^^^", all->head->next->shift);
 	return;
 }
 
@@ -164,8 +172,12 @@ void ShowFindMenu(Tickets *tickets)
 
 void Show_Tickets(Tickets *tickets, int isRefund)
 {
+	printf("wwwwwShowTickets is start--------");
+	printf("-------%d\n", isRefund);
 	ShowTickets(tickets);
-	if(isRefund == BOOL_BACKTICKET)
+	printf("------- ShowTickets is end-------");
+	printf("--------%d\n", isRefund);
+	if(isRefund == 0)
 	{
 		int index;
 		printf("select eradicate a tickets\n");
@@ -173,6 +185,7 @@ void Show_Tickets(Tickets *tickets, int isRefund)
 		RemoveAt(tickets, index);
 		ShowTickets(tickets);
 	}
+	return;
 }
 
 void Show_FindTickets_End(Tickets *tickets)
@@ -229,5 +242,6 @@ void Show_FindTickets_Shift(Tickets *tickets)
 	ticket -> rookState = 1;
 	printf("hello----%s",ticket -> shift);
 	Add(tickets, ticket);
+	printf("show_AddTickets is over &&&%s&&&", tickets->head->next->shift);
 	return;
 }

@@ -226,7 +226,7 @@ void ShowTicket(Ticket *ticket)
 	printf("earlyPeople:%d\n", ticket -> earlyPeople);
 	printf("nightPeople:%d\n", ticket ->nightPeople);
 	printf("rookState:%s\n", ConvertToRookState(ticket -> rookState));
-	return;
+	printf("kkkkkkkkshowtickets------%s", ticket -> shift);
 }
 
 void ShowTickets(Tickets *tickets)
@@ -239,7 +239,56 @@ void ShowTickets(Tickets *tickets)
 	}
 	if (work == NULL)
 		printf("NULL KNOW\n");
-	printf("showtickets------%s", work -> shift);
-	return;
+	
 }
 
+void StreamWriteC(const char *filePath, Tickets *tickets)
+{
+	//int i;
+	//int len = GetLength(tickets);
+	Ticket *work = tickets->head->next;
+	FILE *fp;
+	fp = fopen(filePath, "w");
+	if(fp == NULL)
+	{
+		printf("fp is error");
+		exit(0);
+	}
+	//for(i = 0; i < len; i++)
+	while(work != NULL)
+	{
+		fscanf(fp,"%s, %s, %s, %s, %s, %s, %d, %d, %d \n", work->shift, work->ticketID, work->startTime,
+			work->startPlease, work->endTime, work->endPlease, &work->maxPeople,
+			&work->earlyPeople, &work->nightPeople);
+		work = work->next;
+	}
+	fclose(fp);
+}
+
+Tickets *StreamReadC(const char *filePath)
+{
+	printf("this is ok");
+	Tickets *tickets = newTickets();
+	FILE *fp;
+	printf("this is ok");
+	fp = fopen(filePath, "r");
+	if(fp == NULL)
+	{
+		printf("error");
+		exit(0);
+	}
+	while(feof(fp))
+	{
+		Ticket *ticket = newTicket();
+		fprintf(fp, "%s, %s, %s, %s, %s, %s, %d, %d, %d \n", ticket->shift, ticket->ticketID,ticket->startTime,
+			ticket->startPlease, ticket->endTime, ticket->endPlease, ticket->maxPeople,
+			ticket->earlyPeople, ticket->nightPeople);
+		Add(tickets, ticket);
+	}
+	return tickets;
+}
+
+Tickets *StreamReadD(const char*filePath, Tickets *tickets)
+{
+
+}
