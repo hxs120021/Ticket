@@ -1,7 +1,11 @@
+#ifndef COLLICTON_H_INCLUDED
+#define COLLICTON_H_INCLUDED
+#endif // COLLICTON_H_INCLUDED
+
 #include <stdio.h>
 #include <stdlib.h>
 #include "NeedType.h"
-
+#include "FileIO.h"
 typedef enum{
 	first,last
 }RemoveMode;
@@ -11,6 +15,7 @@ void WritLine(Tickets *tickets);
 void AddAt(Tickets *tickets, Ticket *ticket, int index);
 int GetLength(Tickets *tickets);
 Tickets *newTickets();
+void ShowTickets(Tickets *tickets);
 
 Ticket *newTicket()
 {
@@ -25,24 +30,18 @@ Tickets *newTickets()
 	Tickets *tickets = (Tickets*)malloc(sizeof(Tickets));
 	tickets->head = newTicket();
 	tickets->last = tickets->head;
-	
+
 	return tickets;
 }
-/*
-NeedTickets *newNeedTicekts()
-{
-	NeedTickets *needTickets = (NeedTickets*)malloc(sizeof(NeedTickets));
-	needTickets -> myTickets = newTickets();
-	needTicekts -> allTickets = newTickets();
-	return needTickets;
-}
-*/
+
 void Add(Tickets *tickets, Ticket *ticket)
 {
-	
+
 	ticket->previous = tickets->last;
 	tickets->last->next = ticket;
 	tickets->last = ticket;
+	//printf("%s", ticket->shift);
+	//ShowTickets(tickets);
 }
 
 void WritLine(Tickets *tickets)
@@ -226,7 +225,6 @@ void ShowTicket(Ticket *ticket)
 	printf("earlyPeople:%d\n", ticket -> earlyPeople);
 	printf("nightPeople:%d\n", ticket ->nightPeople);
 	printf("rookState:%s\n", ConvertToRookState(ticket -> rookState));
-	printf("kkkkkkkkshowtickets------%s", ticket -> shift);
 }
 
 void ShowTickets(Tickets *tickets)
@@ -237,9 +235,11 @@ void ShowTickets(Tickets *tickets)
 		ShowTicket(work);
 		work = work -> next;
 	}
+	/*
 	if (work == NULL)
 		printf("NULL KNOW\n");
-	
+*/
+	return;
 }
 
 void StreamWriteC(const char *filePath, Tickets *tickets)
@@ -267,10 +267,8 @@ void StreamWriteC(const char *filePath, Tickets *tickets)
 
 Tickets *StreamReadC(const char *filePath)
 {
-	printf("this is ok");
 	Tickets *tickets = newTickets();
 	FILE *fp;
-	printf("this is ok");
 	fp = fopen(filePath, "r");
 	if(fp == NULL)
 	{
@@ -288,7 +286,18 @@ Tickets *StreamReadC(const char *filePath)
 	return tickets;
 }
 
-Tickets *StreamReadD(const char*filePath, Tickets *tickets)
-{
 
+Ticket *CloneTicket(Ticket *ticket)
+{
+	Ticket *work = newTicket();
+	work -> shift = ticket -> shift;
+	work -> ticketID = ticket -> ticketID;
+	work -> startTime = ticket -> startTime;
+	work -> startPlease = ticket -> startPlease;
+	work -> endTime = ticket -> endTime;
+	work -> endPlease = ticket -> endPlease;
+	work -> maxPeople = ticket -> maxPeople;
+	work -> earlyPeople = ticket -> earlyPeople;
+	work -> nightPeople = ticket -> nightPeople;
+	return work;
 }

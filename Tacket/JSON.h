@@ -1,3 +1,7 @@
+#ifndef JSON_H_INCLUDED
+#define JSON_H_INCLUDED
+#endif // JSON_H_INCLUDED
+
 #include<stdio.h>
 #include<stdlib.h>
 #include"Collicton.h"
@@ -7,9 +11,9 @@ typedef cJSON * cJson;
 
 void TicketAddValue(Ticket *ticket, cJson cjson)
 {
-	printf("TicketAddValue-----%s\n", cJSON_GetObjectItem(cjson, "shift") -> valuestring);
+
 	ticket -> shift = cJSON_GetObjectItem(cjson, "shift") -> valuestring;
-	//more
+
 	ticket -> ticketID = cJSON_GetObjectItem(cjson, "ticketID") -> valuestring;
 	ticket -> startTime = cJSON_GetObjectItem(cjson, "startTime") -> valuestring;
 	ticket -> startPlease = cJSON_GetObjectItem(cjson, "startPlease") -> valuestring;
@@ -19,13 +23,13 @@ void TicketAddValue(Ticket *ticket, cJson cjson)
 	ticket -> earlyPeople = cJSON_GetObjectItem(cjson, "earlyPeople") -> valueint;
 	ticket -> nightPeople = cJSON_GetObjectItem(cjson, "nightPeople") -> valueint;
 	ticket -> rookState = cJSON_GetObjectItem(cjson, "rookState") -> valueint;
-	//ticket -> rookState = cJSON_GetObjectItem(cjson, "") ->valuestrig
+
 }
 
 void AddTicketValue(cJson cjson, Ticket *ticket)
 {
 	cJSON_AddStringToObject(cjson, "shift", ticket -> shift);
-	//more
+
 	cJSON_AddStringToObject(cjson, "ticketID", ticket -> ticketID);
 	cJSON_AddStringToObject(cjson, "startTime", ticket -> startTime);
 	cJSON_AddStringToObject(cjson, "startPlease", ticket -> startPlease);
@@ -39,13 +43,13 @@ void AddTicketValue(cJson cjson, Ticket *ticket)
 
 Tickets *JsonToTickets(string json)
 {
-	printf("%s\n", json);
+	//printf("%s\n", json);
 	cJson root, arrayItem, item;
 	int i = 0;// size = 0;
 	root = cJSON_Parse(json);
-//	size = cJSON_GetArraySize(root);
+
 	Tickets *tickets = newTickets();
-//	cJSON_Delete(root);
+
 	string p = NULL;
 	while(1)
 	{
@@ -55,13 +59,15 @@ Tickets *JsonToTickets(string json)
 		{
 			p = cJSON_Print(arrayItem);
 			item = cJSON_Parse(p);
-//			ticket -> shift = cJSON_GetObjectItem(item, "shift") -> valuestring;
+
 			TicketAddValue(ticket, item);
 			Add(tickets, ticket);
 			i++;
 		}
 		else break;
 	}
+	cJSON_Delete(root);
+
 	return tickets;
 }
 

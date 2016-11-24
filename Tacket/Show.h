@@ -1,9 +1,13 @@
+#ifndef SHOW_H_INCLUDED
+#define SHOW_H_INCLUDED
+#endif // SHOW_H_INCLUDED
+
 #include <stdlib.h>
 #include <stdio.h>
-#include <unistd.h>
-//#include "JSON.h"
-#include "FileIO.h"
-//#include "Collicton.h"
+#include "JSON.h"
+//#include "FileIO.h"
+//#include <windows.h>
+
 #define BOOL_BACKTICKET 0
 #define BOOL_DONTBACKTICKET 1
 #define ADDTICKET 2
@@ -18,7 +22,7 @@ void Show_Tickets(Tickets *tickets, int isRefund);
 void Show_FindTickets_End(Tickets *tickets);
 void Show_FindTickets_Shift(Tickets *tickets);
 void Show_AddTickets(Tickets *tickets);
-
+void BuyTickets(Tickets *all, Tickets *myT);
 
 char *Passwd()
 {
@@ -34,28 +38,28 @@ char *Passwd()
 	p[i] = '\0';
 	return p;
 }
-
+/*
 void ShowStartMenu(Tickets *all, Tickets *myH, Tickets *myT)
 {
 	int i;
-	for(i = 0; i < 30; i++)
+	for(i = 0; i < 10; i++)
 	{
 		printf("\\\\");
 		sleep(20);
 	}
-	for(i = 0; i < 10; i++)
+	for(i = 0; i < 7; i++)
 	{
 		printf("||");
 		sleep(20);
 	}
 	printf(">_<");
 	sleep(20);
-	for(i = 0; i < 15; i++)
+	for(i = 0; i < 7; i++)
 	{
 		printf("||");
 		sleep(20);
 	}
-	for(i = 0; i < 30; i++)
+	for(i = 0; i < 10; i++)
 	{
 		printf("//");
 		sleep(20);
@@ -64,33 +68,31 @@ void ShowStartMenu(Tickets *all, Tickets *myH, Tickets *myT)
 	ShowMainMenu(all, myH, myT);
 	return;
 }
-
+*/
 void ShowMainMenu(Tickets *all, Tickets *myH, Tickets *myT)
-{	
+{
 
 	char user[10], passwd[20];
-	printf("deng lu:\n");
+	printf("deng lu please\n");
 	printf("log on :");
 	scanf("%s", user);
-//	gets(user);
+
 	printf("passwd :");
-//	passwd = Passwd();
-//	gets(passwd);
+
 	scanf("%s", passwd);
 	if(strcmp(user, "admin") == 0 && strcmp(passwd, "123") == 0)
 	{
 		ShowAdminiMenu(all);
-		printf("\nint int %d int int \n", GetLength(all));
-		printf("\nShowAdminiMenu is over***%s***\n", all -> head -> next -> shift);
+	
 	}
 	else if(strcmp(user, "user") == 0 && strcmp(passwd, "456") == 0)
 		ShowUserMenu(all, myH, myT);
 	else
 		printf("log in is false\n");
-	printf("%s", all->head->next->shift);
-	StreamWriteC("allTickets.txt", all);
-	StreamWriteC("myTickets.txt", myT);
-	StreamWriteC("myHistory.txt", myH);
+	//printf("\n have error two!%s!", all->head->next->shift);
+	StreamWrite("allTickets.txt", TicketsToJson(all));
+	StreamWrite("myTickets.txt", TicketsToJson(myT));
+	StreamWrite("myHistory.txt", TicketsToJson( myH));
 	return;
 }
 
@@ -105,9 +107,9 @@ void ShowAdminiMenu(Tickets *all)
 	switch(index)
 	{
 		case 1:
-			{//Show_Tickets();
+			{
 				Show_AddTickets(all);
-				printf(" --%s-- ",all -> head -> next -> shift);
+				//printf("have error one --%s-- ",all -> head -> next -> shift);
 				break;
 			}
 		case 2:
@@ -117,7 +119,7 @@ void ShowAdminiMenu(Tickets *all)
 			Show_Tickets(all, BOOL_BACKTICKET);
 			break;
 	}
-	printf("switch is over ^^^%s^^^", all->head->next->shift);
+	
 	return;
 }
 
@@ -125,9 +127,9 @@ void ShowUserMenu(Tickets *all, Tickets *myH, Tickets *myT)
 {
 	int index;
 	printf("select one:\n");
-	printf("1.My ticket:\n");
-	printf("2.My history\n");
-	printf("3.Show All\n");
+	printf("1.My Ticket:\n");
+	printf("2.My History\n");
+	printf("3.Buy Tickets\n");
 	printf("4.Find Ticket\n");
 	scanf("%d", &index);
 	switch(index)
@@ -145,11 +147,11 @@ void ShowUserMenu(Tickets *all, Tickets *myH, Tickets *myT)
 			Show_Tickets(myH, BOOL_DONTBACKTICKET);
 			break;
 		case 3:
-			Show_Tickets(all, BOOL_DONTBACKTICKET);
+			BuyTickets(all, myT);
 			break;
 		case 4:
 			ShowFindMenu(all);
-			//Show_FindTickets(allTickets);
+			
 	}
 }
 
@@ -172,11 +174,7 @@ void ShowFindMenu(Tickets *tickets)
 
 void Show_Tickets(Tickets *tickets, int isRefund)
 {
-	printf("wwwwwShowTickets is start--------");
-	printf("-------%d\n", isRefund);
 	ShowTickets(tickets);
-	printf("------- ShowTickets is end-------");
-	printf("--------%d\n", isRefund);
 	if(isRefund == 0)
 	{
 		int index;
@@ -193,7 +191,7 @@ void Show_FindTickets_End(Tickets *tickets)
 	printf("you want to please:");
 	char *end = NULL;
 	scanf("%s", end);
-	//Tickets *result = Find(tickets, end);
+	
 	ShowTickets(FindEnd(tickets, end));
 }
 
@@ -240,8 +238,32 @@ void Show_FindTickets_Shift(Tickets *tickets)
 	ticket -> earlyPeople = 999;
 	ticket -> nightPeople = 999;
 	ticket -> rookState = 1;
-	printf("hello----%s",ticket -> shift);
+	//printf("hello----%s",ticket -> shift);
 	Add(tickets, ticket);
-	printf("show_AddTickets is over &&&%s&&&", tickets->head->next->shift);
+	//printf("have error!! &&&%s&&&", tickets->head->next->shift);
+	return;
+}
+
+void BuyTickets(Tickets *allTickets, Tickets *myTickets)
+{
+	int index;
+	Ticket *work = allTickets->head->next, *ticket = newTicket();
+	printf("select one add to myTickets\n");
+	ShowTickets(allTickets);
+	
+	scanf("%d", &index);
+	if(index > GetLength(allTickets) || index < 0)
+	{
+		printf("index is error\n");
+		return;
+	}
+	else
+	{
+		int i;
+		for(i = 0; i < index ; i++)
+			work = work -> next;
+		ticket = CloneTicket(work);
+		Add(myTickets, ticket);
+	}
 	return;
 }

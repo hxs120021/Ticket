@@ -1,6 +1,15 @@
+#ifndef FILEIO_H_INCLUDED
+#define FILEIO_H_INCLUDED
+#endif // FILEIO_H_INCLUDED
+
 #include<stdio.h>
-#include"JSON.h"
+//#include"JSON.h"
+//#include "Collicton.h"
 #include<stdlib.h>
+
+string StreamRead(const string filePath);
+void StreamWrite(const string fliePath, string jsonString);
+
 string StreamRead(const string filePath)
 {
 //	printf("%s\n", filePath);
@@ -15,14 +24,14 @@ string StreamRead(const string filePath)
 		return NULL;
 	}
 	fgets(jsonString,1024,fp);
-	
+
 	fclose(fp);
 	return jsonString;
 }
 
 void StreamWrite(const string filePath, string jsonString)
 {
-	printf("%s\n", jsonString);
+	//printf("%s\n", jsonString);
 	FILE *fp;
 	fp = fopen(filePath, "wb");
 	if (fp == NULL)
@@ -30,7 +39,7 @@ void StreamWrite(const string filePath, string jsonString)
 		printf("file open is failed\n");
 		return;
 	}
-	
+
 	fputs(jsonString, fp);
 	fclose(fp);
 	return;
@@ -49,3 +58,4 @@ string StreamReadB(const string filePath)
 	fread(tmp, file_size, sizeof(char), fp);
 	return tmp;
 }
+
